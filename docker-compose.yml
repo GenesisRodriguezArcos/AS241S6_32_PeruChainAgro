@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: peruchain-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_URL=${DATABASE_URL}
+      - FRONTEND_URL=http://localhost:80
+    restart: unless-stopped
+    networks:
+      - peruchain-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend (Svelte)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: peruchain-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - peruchain-network
+    environment:
+      - VITE_API_URL=http://localhost:3001
+
+networks:
+  peruchain-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

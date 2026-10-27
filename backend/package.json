@@ -1,0 +1,21 @@
+{
+  "name": "peruchain-agro-backend",
+  "version": "1.0.0",
+  "description": "Backend API para PeruChain Agro DApp con Neon PostgreSQL",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["blockchain", "agriculture", "api", "neon", "postgresql"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "@neondatabase/serverless": "^0.7.2",
+    "pg": "^8.11.3"
+  }
+}
