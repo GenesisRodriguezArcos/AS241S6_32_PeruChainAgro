@@ -1,0 +1,28 @@
+services:
+  # Backend API
+  - type: web
+    name: peruchainagro-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_VganO5sDjHE2@ep-soft-mouse-b4hvq28z-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: PORT
+        value: 3001
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        value: "*"
+
+  # Frontend (Svelte)
+  - type: web
+    name: peruchainagro-frontend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        sync: false
