@@ -5,7 +5,7 @@ export const NETWORKS = {
   ETHEREUM: {
     chainId: 1,
     name: 'Ethereum Mainnet',
-    rpcUrl: 'https://eth.llamarpc.com',
+    rpcUrl: 'https://eth.drpc.org',
     symbol: 'ETH',
     explorer: 'https://etherscan.io',
     type: 'EVM'
@@ -13,7 +13,7 @@ export const NETWORKS = {
   SEPOLIA: {
     chainId: 11155111,
     name: 'Ethereum Sepolia',
-    rpcUrl: 'https://rpc.sepolia.org',
+    rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
     symbol: 'ETH',
     explorer: 'https://sepolia.etherscan.io',
     type: 'EVM'
@@ -29,7 +29,7 @@ export const NETWORKS = {
   POLYGON: {
     chainId: 137,
     name: 'Polygon Mainnet',
-    rpcUrl: 'https://polygon-rpc.com',
+    rpcUrl: 'https://polygon-bor-rpc.publicnode.com',
     symbol: 'MATIC',
     explorer: 'https://polygonscan.com',
     type: 'EVM'

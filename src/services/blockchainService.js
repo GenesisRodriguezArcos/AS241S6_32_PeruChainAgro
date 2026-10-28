@@ -11,10 +11,17 @@ export class BlockchainService {
     const chainIdHex = '0x' + network.chainId.toString(16);
 
     try {
-      await window.ethereum.request({
+      // Agregar timeout de 10 segundos para el cambio de red
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Tiempo de espera agotado. La red no responde.')), 10000)
+      );
+
+      const switchPromise = window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainIdHex }],
       });
+
+      await Promise.race([switchPromise, timeout]);
       return true;
     } catch (switchError) {
       // La red no existe, intentar agregarla
