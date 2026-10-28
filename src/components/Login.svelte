@@ -96,9 +96,16 @@
           <div class="wallet-icon-large">WALLET</div>
         </div>
 
-        <div class="info-message">
-          <p>Se detectará automáticamente la wallet instalada en tu navegador</p>
-        </div>
+        {#if !isLoading}
+          <div class="info-message">
+            <p>Se detectará automáticamente la wallet instalada en tu navegador</p>
+          </div>
+        {:else}
+          <div class="loading-message">
+            <p><strong>⏳ Esperando confirmación...</strong></p>
+            <p>Por favor, abre tu wallet (MetaMask, PaliWallet, etc.) y acepta la conexión</p>
+          </div>
+        {/if}
 
         {#if errorMessage}
           <div class="error-alert">
@@ -322,6 +329,41 @@
     color: #2E7D32;
     line-height: 1.5;
     margin: 0;
+  }
+
+  /* Loading Message */
+  .loading-message {
+    padding: 20px;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 2px solid #FFB74D;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .loading-message p {
+    font-size: 14px;
+    color: #E65100;
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+    text-align: center;
+  }
+
+  .loading-message p:last-child {
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  @keyframes pulse {
+    0%, 100% { 
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
   }
 
   /* Error Alert */
