@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    image: genesis2006/peruchainagro-backend:latest
+    container_name: peruchainagro-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://neondb_owner:npg_VganO5sDjHE2@ep-soft-mouse-b4hvq28z-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - PORT=3001
+      - NODE_ENV=production
+      - FRONTEND_URL=*
+    restart: unless-stopped
+    networks:
+      - peruchainagro-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend (Svelte)
+  frontend:
+    image: genesis2006/peruchainagro-frontend:latest
+    container_name: peruchainagro-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:3001
+    restart: unless-stopped
+    networks:
+      - peruchainagro-network
+
+networks:
+  peruchainagro-network:
+    driver: bridge
